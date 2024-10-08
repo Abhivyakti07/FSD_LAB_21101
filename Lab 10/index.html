@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Data Fetcher</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label, input { display: block; margin-bottom: 10px; }
+    #results { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Retrieve Student Data by CGPA</h2>
+  <form id="studentForm">
+    <label for="cgpa">Enter CGPA:</label>
+    <input type="text" id="cgpa" name="cgpa" placeholder="e.g., 3.5" required>
+    <button type="submit">Get Student Data</button>
+  </form>
+
+  <div id="results"></div>
+
+  <script>
+    $(document).ready(function(){
+      $('#studentForm').on('submit', function(event){
+        event.preventDefault();
+        
+        var cgpa = $('#cgpa').val();
+
+        $.ajax({
+          url: 'get_student_data.php',  // Server-side script (PHP or Node.js)
+          method: 'POST',
+          data: { cgpa: cgpa },
+          success: function(response) {
+            $('#results').html(response);
+          },
+          error: function() {
+            $('#results').html('An error occurred.');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
